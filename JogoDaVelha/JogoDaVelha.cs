@@ -1,8 +1,4 @@
-﻿
-
-
-
-namespace JogoDaVelha
+﻿namespace JogoDaVelha
 {
     class JogoDaVelha
     {
@@ -26,9 +22,52 @@ namespace JogoDaVelha
                 RenderizarJogo();
                 LerJogada();
                 RenderizarJogo();
-                //VerificarFimJogo();
+                VerificarFimJogo();
                 MudarVez();
             }
+        }
+
+        private void VerificarFimJogo()
+        {
+            if (Contador < 5)
+                return;
+
+            if (vitoriaHorizontal() || VitoriaVertical() || VitoriaDiagonal())
+            {
+                FimDeJogo = true;
+                Console.WriteLine($"Vitoria de {Vez}");
+                return;
+            }
+
+            if (Contador == 9)
+            {
+                FimDeJogo = true;
+                Console.WriteLine("Empate!!!");
+                return;
+            }
+        }
+
+        private bool vitoriaHorizontal()
+        {
+            bool vitoria1 = PecaDoJogo[0] == PecaDoJogo[1] && PecaDoJogo[0] == PecaDoJogo[2];
+            bool vitoria2 = PecaDoJogo[3] == PecaDoJogo[4] && PecaDoJogo[3] == PecaDoJogo[5];
+            bool vitoria3 = PecaDoJogo[6] == PecaDoJogo[7] && PecaDoJogo[6] == PecaDoJogo[8];
+            return vitoria1 || vitoria2 || vitoria3;
+        }
+
+        private bool VitoriaVertical()
+        {
+            bool vitoria1 = PecaDoJogo[0] == PecaDoJogo[3] && PecaDoJogo[0] == PecaDoJogo[6];
+            bool vitoria2 = PecaDoJogo[1] == PecaDoJogo[4] && PecaDoJogo[1] == PecaDoJogo[7];
+            bool vitoria3 = PecaDoJogo[2] == PecaDoJogo[5] && PecaDoJogo[2] == PecaDoJogo[8];
+            return vitoria1 || vitoria2 || vitoria3;
+        }
+
+        private bool VitoriaDiagonal()
+        {
+            bool vitoria1 = PecaDoJogo[0] == PecaDoJogo[4] && PecaDoJogo[0] == PecaDoJogo[8];
+            bool vitoria2 = PecaDoJogo[2] == PecaDoJogo[4] && PecaDoJogo[2] == PecaDoJogo[6];
+            return vitoria1 || vitoria2;
         }
 
         private void MudarVez()
@@ -41,7 +80,7 @@ namespace JogoDaVelha
             Console.Write($"{Vez} digite um número de 1 a 9 que esteja disponível: ");
             bool eUmNumero = int.TryParse(Console.ReadLine(), out int posicaoPeca);
 
-            while (!eUmNumero && !posicaoVazia(posicaoPeca))
+            while (!eUmNumero || !posicaoVazia(posicaoPeca))
             {
                 Console.Write($"{Vez} digite um número de 1 a 9 que esteja disponível: ");
                 eUmNumero = int.TryParse(Console.ReadLine(), out posicaoPeca);
@@ -52,13 +91,16 @@ namespace JogoDaVelha
 
         private void PreencherEscolha(int posicaoPeca)
         {
-            int indice = -1;
+            int indice = posicaoPeca -1;
             PecaDoJogo[indice] = Vez;
+            Contador++;
         }
 
         private bool posicaoVazia(int posicaoPeca)
         {
-            if (PecaDoJogo[posicaoPeca] == 'x' || PecaDoJogo[posicaoPeca] == 'o')
+            int indice = posicaoPeca - 1;
+
+            if (PecaDoJogo[indice] == 'x' || PecaDoJogo[indice] == 'o')
                 return false;
             return true;
         }
