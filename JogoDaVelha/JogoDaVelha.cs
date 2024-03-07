@@ -1,6 +1,7 @@
 ﻿
 
 
+
 namespace JogoDaVelha
 {
     class JogoDaVelha
@@ -23,7 +24,7 @@ namespace JogoDaVelha
             while (!FimDeJogo)
             {
                 RenderizarJogo();
-                //LerJogada();
+                LerJogada();
                 RenderizarJogo();
                 //VerificarFimJogo();
                 MudarVez();
@@ -33,6 +34,33 @@ namespace JogoDaVelha
         private void MudarVez()
         {
             Vez = Vez == 'x' ? 'o' : 'x';
+        }
+
+        private void LerJogada()
+        {
+            Console.Write($"{Vez} digite um número de 1 a 9 que esteja disponível: ");
+            bool eUmNumero = int.TryParse(Console.ReadLine(), out int posicaoPeca);
+
+            while (!eUmNumero && !posicaoVazia(posicaoPeca))
+            {
+                Console.Write($"{Vez} digite um número de 1 a 9 que esteja disponível: ");
+                eUmNumero = int.TryParse(Console.ReadLine(), out posicaoPeca);
+            }
+
+            PreencherEscolha(posicaoPeca);
+        }
+
+        private void PreencherEscolha(int posicaoPeca)
+        {
+            int indice = -1;
+            PecaDoJogo[indice] = Vez;
+        }
+
+        private bool posicaoVazia(int posicaoPeca)
+        {
+            if (PecaDoJogo[posicaoPeca] == 'x' || PecaDoJogo[posicaoPeca] == 'o')
+                return false;
+            return true;
         }
 
         private void RenderizarJogo()
