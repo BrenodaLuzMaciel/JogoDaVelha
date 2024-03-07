@@ -1,61 +1,51 @@
 ﻿
+
+
 namespace JogoDaVelha
 {
     class JogoDaVelha
     {
-        private char[] PosicaoDasPecas;
         private bool FimDeJogo;
-        private char vez;
+        private char[] PecaDoJogo;
+        private char Vez;
+        private int Contador;
 
         public JogoDaVelha()
         {
             FimDeJogo = false;
-            PosicaoDasPecas = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-            vez = 'x';
+            PecaDoJogo = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            Vez = 'x';
+            Contador = 0;
         }
 
         public void Iniciar()
         {
-            RenderizarJogo();
-            //LerJogada();
-            //RenderizarJogo();
-            //HouveGanhador();
-            MudarVez();
-
-
+            while (!FimDeJogo)
+            {
+                RenderizarJogo();
+                //LerJogada();
+                RenderizarJogo();
+                //VerificarFimJogo();
+                MudarVez();
+            }
         }
 
         private void MudarVez()
         {
-            vez = vez == 'x' ? 'o' : 'x';
-        }
-
-        private void NovaJogada()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void HouveGanhador()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void LerJogada()
-        {
-            throw new NotImplementedException();
+            Vez = Vez == 'x' ? 'o' : 'x';
         }
 
         private void RenderizarJogo()
         {
             Console.Clear();
-            Console.WriteLine(ObterTabela());
+            Console.WriteLine(CarregarJogo());
         }
 
-        private string ObterTabela()
+        private string CarregarJogo()
         {
-            return $"__{PosicaoDasPecas[0]}__|__{PosicaoDasPecas[1]}__|__{PosicaoDasPecas[2]}__ \n" +
-                   $"__{PosicaoDasPecas[3]}__|__{PosicaoDasPecas[4]}__|__{PosicaoDasPecas[5]}__ \n" +
-                   $"  {PosicaoDasPecas[6]}  |  {PosicaoDasPecas[7]}  |  {PosicaoDasPecas[8]}  \n\n";
+            return $"__{PecaDoJogo[0]}__|__{PecaDoJogo[1]}__|__{PecaDoJogo[2]}__\n" +
+                   $"__{PecaDoJogo[3]}__|__{PecaDoJogo[4]}__|__{PecaDoJogo[5]}__\n" +
+                   $"  {PecaDoJogo[6]}  |  {PecaDoJogo[7]}  |  {PecaDoJogo[8]}  \n\n";
         }
     }
 }
